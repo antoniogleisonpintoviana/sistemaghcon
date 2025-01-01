@@ -3,12 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema ghcon</title>
-    <link rel="icon" type="image/png" href="src/assets/favicon.png" sizes="32x32">
-
+  <title>Calculadora de Parcelas</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #000;
+    }
+    .container {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #000;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: #F7DC6F;
+    }
+    .logo {
+      width: 30%;
+      max-height: 50px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+    .select {
+      width: 100%;
+      height: 40px;
+      font-size: 18px;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #F7DC6F;
+      border-radius: 5px;
+      background-color: #333;
+      color: #F7DC6F;
+    }
+    .resultado {
+      font-size: 36px;
+      font-weight: bold;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #333;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: #F7DC6F;
+    }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <div class="container">
+    <img src="ghlogo.png" alt="Logo GH" class="logo">
+    <label>Selecione o valor do crédito:</label>
+    <select id="valorCredito" class="select">
+      <!-- Opções serão adicionadas dinamicamente -->
+    </select>
+    <div id="resultado" class="resultado">Valor da Parcela: R$ 0,00</div>
+  </div>
+
+  <script>
+    const creditos = [
+      33698.60, 36290.80, 38364.56, 41475.20, 46659.60, 51844.00,
+      57028.40, 62212.80, 67397.20, 70000.00, 75000.00, 80000.00,
+      84000.00, 91356.04, 97446.44, 104506.60, 114957.26, 125407.92,
+      135858.58, 146309.24, 156759.90, 167210.56, 177661.22, 188111.88
+    ];
+
+    const select = document.getElementById('valorCredito');
+    const resultado = document.getElementById('resultado');
+
+    creditos.forEach((credito) => {
+      const option = document.createElement('option');
+      option.value = credito;
+      option.text = credito.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      select.appendChild(option);
+    });
+
+    select.addEventListener('change', (e) => {
+      const valorCredito = parseFloat(e.target.value);
+      const parcela = valorCredito / 84;
+      resultado.textContent = `Valor da Parcela: R$ ${parcela.toFixed(2)}`;
+    });
+
+    select.value = 33698.60;
+    const parcelaInicial = (33698.60 / 84).toFixed(2);
+    resultado.textContent = `Valor da Parcela: R$ ${parcelaInicial}`;
+  </script>
 </body>
 </html>
