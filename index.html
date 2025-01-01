@@ -1,97 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Sistema ghcon</title>
-  <style>
-    body {
-      font-family: Arial;
-      background-color: #000;
-      font-size: 16px;
-    }
-    .container {
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #000;
-      padding: 15px;
-      border-radius: 10px;
-      color: #F7DC6F;
-    }
-    .logo {
-      width: 30%;
-      height:30%
-      /*max-height: 30px;*/
-      object-fit: contain;
-      margin-bottom: 15px;
-    }
-    .select {
-      width: 100%;
-      height: 30px;
-      font-size: 14px;
-      padding: 5px;
-      margin-bottom: 15px;
-      border: 1px solid #F7DC6F;
-      border-radius: 5px;
-      background-color: #333;
-      color: #F7DC6F;
-    }
-    .resultado {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 15px;
-      padding: 15px;
-      background-color: #333;
-      border-radius: 10px;
-      color: #F7DC6F;
-    }
-  </style>
-	 <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema ghcon/title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        select {
+            height: 40px;
+            width: 250px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .parcelas-container {
+            margin-top: 20px;
+        }
+        .parcelas-text {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+    </style>
+	<link rel="icon" type="image/png" href="favicon.png">
 
 </head>
 <body>
-  <div class="container">
-    <img src="ghlogo.png" alt="Logo GH" class="logo">
-    <label>Selecione o valor do crédito:</label>
-    <select id="valorCredito" class="select"></select>
-    <div id="resultado" class="resultado">Valor da Parcela: R$ 0,00</div>
-  </div>
-  <script>
-    const creditos = [33698.60, 36290.80, 38364.56, 41475.20, 46659.60, 51844.00, 57028.40, 62212.80, 67397.20, 70000.00, 75000.00, 80000.00, 84000.00, 91356.04, 97446.44, 104506.60, 114957.26, 125407.92, 135858.58, 146309.24, 156759.90, 167210.56, 177661.22, 188111.88];
-    const select = document.getElementById('valorCredito');
-    const resultado = document.getElementById('resultado');
-    creditos.forEach((credito) => {
-      const option = document.createElement('option');
-      option.value = credito;
-      option.text = credito.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-      select.appendChild(option);
+
+<div class="container">
+    <img src="ghlogo.png" alt="Logo" class="logo">
+
+    <div class="title">Selecione o Crédito</div>
+
+    <select id="creditoSelect">
+        <option value="33.698,60">33.698,60</option>
+        <option value="36.290,80">36.290,80</option>
+        <option value="38.364,56">38.364,56</option>
+        <option value="41.475,20">41.475,20</option>
+        <option value="51.844,00">51.844,00</option>
+        <option value="57.028,40">57.028,40</option>
+        <option value="62.212,80">62.212,80</option>
+        <option value="67.397,20">67.397,20</option>
+        <option value="94.055,94">94.055,94</option>
+        <option value="99.281,27">99.281,27</option>
+        <option value="104.506,60">104.506,60</option>
+        <option value="114.957,26">114.957,26</option>
+        <option value="125.407,92">125.407,92</option>
+        <option value="135.858,58">135.858,58</option>
+        <option value="146.309,24">146.309,24</option>
+        <option value="156.759,90">156.759,90</option>
+        <option value="167.210,56">167.210,56</option>
+        <option value="177.661,22">177.661,22</option>
+        <option value="188.111,88">188.111,88</option>
+    </select>
+
+    <div id="parcelasContainer" class="parcelas-container"></div>
+</div>
+
+<script>
+    const parcelas = {
+        '33.698,60': {
+            primeiraParcela: '533,55',
+            demaisParcelas: '400,17',
+            metadePlano: '533,35',
+        },
+        '36.290,80': {
+            primeiraParcela: '574,59',
+            demaisParcelas: '430,95',
+            metadePlano: '574,59',
+        },
+        '38.364,56': {
+            primeiraParcela: '607,43',
+            demaisParcelas: '455,58',
+            metadePlano: '607,43',
+        },
+        '41.475,20': {
+            primeiraParcela: '656,68',
+            demaisParcelas: '492,52',
+            metadePlano: '656,68',
+        },
+        '51.844,00': {
+            primeiraParcela: '820,85',
+            demaisParcelas: '615,65',
+            metadePlano: '820,85',
+        },
+        '57.028,40': {
+            primeiraParcela: '902,93',
+            demaisParcelas: '677,21',
+            metadePlano: '902,93',
+        },
+        '62.212,80': {
+            primeiraParcela: '985,02',
+            demaisParcelas: '738,78',
+            metadePlano: '985,02',
+        },
+        '67.397,20': {
+            primeiraParcela: '1.067,10',
+            demaisParcelas: '800,34',
+            metadePlano: '1.067,10',
+        },
+        '94.055,94': {
+            primeiraParcela: '1.410,84',
+            demaisParcelas: '1.058,13',
+            metadePlano: '1.410,84',
+        },
+        '99.281,27': {
+            primeiraParcela: '1.489,22',
+            demaisParcelas: '1.116,91',
+            metadePlano: '1.489,22',
+        },
+        '104.506,60': {
+            primeiraParcela: '1.567,60',
+            demaisParcelas: '1.175,70',
+            metadePlano: '1.567,60',
+        },
+        '114.957,26': {
+            primeiraParcela: '1.724,36',
+            demaisParcelas: '1.293,27',
+            metadePlano: '1.724,36',
+        },
+        '125.407,92': {
+            primeiraParcela: '1.881,12',
+            demaisParcelas: '1.410,84',
+            metadePlano: '1.881,12',
+        },
+        '135.858,58': {
+            primeiraParcela: '2.037,88',
+            demaisParcelas: '1.528,41',
+            metadePlano: '2.037,88',
+        },
+        '146.309,24': {
+            primeiraParcela: '2.194,64',
+            demaisParcelas: '1.645,98',
+            metadePlano: '2.194,64',
+        },
+        '156.759,90': {
+            primeiraParcela: '2.351,40',
+            demaisParcelas: '1.763,55',
+            metadePlano: '2.351,40',
+        },
+        '167.210,56': {
+            primeiraParcela: '2.508,16',
+            demaisParcelas: '1.881,12',
+            metadePlano: '2.508,16',
+        },
+        '177.661,22': {
+            primeiraParcela: '2.664,92',
+            demaisParcelas: '1.998,69',
+            metadePlano: '2.664,92',
+        },
+        '188.111,88': {
+            primeiraParcela: '2.821,68',
+            demaisParcelas: '1.998,69',
+            metadePlano: '2.821,68',
+        },
+    };
+
+    const creditoSelect = document.getElementById('creditoSelect');
+    const parcelasContainer = document.getElementById('parcelasContainer');
+
+    creditoSelect.addEventListener('change', function () {
+        const credito = this.value;
+        const parcelasSelecionadas = parcelas[credito];
+
+        parcelasContainer.innerHTML = `
+            <div class="parcelas-text">Crédito Selecionado: ${credito}</div>
+            <div class="parcelas-text">Primeira Parcela: ${parcelasSelecionadas.primeiraParcela}</div>
+            <div class="parcelas-text">Demais Parcelas: ${parcelasSelecionadas.demaisParcelas}</div>
+            <div class="parcelas-text">Após Metade do Plano: ${parcelasSelecionadas.metadePlano}</div>
+        `;
     });
-    select.addEventListener('change', (e) => {
-      const valorCredito = parseFloat(e.target.value);
-      const parcela = valorCredito / 84;
-      resultado.textContent = `Valor da Parcela: R$ ${parcela.toFixed(2)}`;
-    });
-    select.value = 33698.60;
-    const parcelaInicial = (33698.60 / 84).toFixed(2);
-    resultado.textContent = `Valor da Parcela: R$ ${parcelaInicial}`;
-  </script>
-    <br>
-	         <br>
-	       		<a style="position: absolute; left: 45%; text-align: center;" href="textodevendas.html">
-    <img src="texto.png" style="width: 1cm; height: 1cm; display: block; margin: 0 auto;">
-    <span>Gerar Script de Vendas</span>
-</a>
-	         <br>
-	         <br>
-	 <br>
-	         <br>
-	        <a style="position: absolute; left: 45%; text-align: center;" href="criarpanfletos.html">
-    <img src="panfletos.png" style="width: 1cm; height: 1cm; display: block; margin: 0 auto;">
-    <span>Criar panfleto</span>
-</a>
-	         <br>
-	         <br>
+
+    // Trigger an initial change to display the first value
+    creditoSelect.dispatchEvent(new Event('change'));
+</script>
+
 </body>
 </html>
