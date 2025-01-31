@@ -45,23 +45,25 @@ function CalculadoraParcelas() {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      backgroundColor: '#000', // Fundo preto
-      color: '#F7DC6F', // Texto amarelo
-      padding: 20,
-      borderRadius: 10,
-      boxShadow: '0 0 10px rgba(0,0,0,0.1)'
+      backgroundColor: '#000',
+      color: '#F7DC6F',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+      maxWidth: '600px',  // Limita a largura da calculadora
+      width: '100%',      // Faz com que ocupe toda a largura da tela até o máximo
     }}>
       <img 
         src={logo} 
         alt="Logo GH" 
         style={{
-          marginBottom: 20, 
-          width: '30%', 
-          maxHeight: '50px', 
-          objectFit: 'contain'
+          marginBottom: 20,
+          width: '40%', // Aumenta a largura para telas menores
+          maxHeight: '50px',
+          objectFit: 'contain',
         }} 
       />
-      <label style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>
+      <label style={{fontSize: '18px', fontWeight: 'bold', marginBottom: 10}}>
         Selecione o valor do crédito:
       </label>
       <select 
@@ -70,13 +72,13 @@ function CalculadoraParcelas() {
         style={{
           width: '100%',
           height: 40,
-          fontSize: 18,
+          fontSize: '18px',
           padding: 10,
           marginBottom: 20,
-          border: '1px solid #F7DC6F', // Borda amarela
+          border: '1px solid #F7DC6F',
           borderRadius: 5,
-          backgroundColor: '#333', // Fundo cinza-escuro
-          color: '#F7DC6F' // Texto amarelo
+          backgroundColor: '#333',
+          color: '#F7DC6F',
         }}
       >
         {creditos.map((credito) => (
@@ -88,29 +90,22 @@ function CalculadoraParcelas() {
       <div 
         id="resultado" 
         style={{
-          fontSize: 36,
+          fontSize: '36px',
           fontWeight: 'bold',
           marginTop: 20,
-          padding: 20,
-          backgroundColor: '#333', // Fundo cinza-escuro
-          borderRadius: 10,
+          padding: '20px',
+          backgroundColor: '#333',
+          borderRadius: '10px',
           boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          color: '#F7DC6F' // Texto amarelo
+          color: '#F7DC6F',
+          textAlign: 'center',
+          width: '100%', // Garante que o resultado ocupe a largura disponível
         }}
       >
         Valor da Parcela: R$ {parcela.toFixed(2)}
       </div>
-	 
-	 
     </div>
-	
-	
-
   );
-  
-
 }
-
-
 
 export default CalculadoraParcelas;
